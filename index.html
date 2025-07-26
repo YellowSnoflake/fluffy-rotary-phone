@@ -9,7 +9,7 @@
   <style>
     body {
       margin: 0;
-      background-color: rgba(0, 0, 0, 0);
+      background-color: rgba(0,0,0,0);
       color: white;
       font-size: 72px;
       font-family: monospace;
@@ -27,19 +27,17 @@
     async function fetchCounter() {
       const url = 'https://corsproxy.io/?https://bot.trustednoobs.fyi/addons/deathctr/deathctr.txt?refresh=' + Date.now();
       try {
-        const response = await fetch(url);
-        if (!response.ok) throw new Error("HTTP " + response.status);
-        const raw = await response.text();
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(raw, 'text/html');
-        const text = doc.body.textContent || '';
-        document.getElementById('counter').textContent = text.trim();
+        const resp = await fetch(url);
+        if (!resp.ok) throw new Error('HTTP ' + resp.status);
+        const raw = await resp.text();
+        const doc = new DOMParser().parseFromString(raw, 'text/html');
+        const text = (doc.body.textContent || '').trim();
+        document.getElementById('counter').textContent = text;
       } catch (err) {
         document.getElementById('counter').textContent = 'Error';
-        console.error("Fetch failed:", err);
+        console.error('Fetch failed:', err);
       }
     }
-
     fetchCounter();
     setInterval(fetchCounter, 3000);
   </script>

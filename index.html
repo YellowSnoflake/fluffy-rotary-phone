@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Death Counter</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: rgba(0, 0, 0, 0);
+      color: white;
+      font-size: 48px;
+      font-family: monospace;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+  </style>
+</head>
+<body>
+  <div id="counter">Loading...</div>
+  <script>
+    async function fetchCounter() {
+      try {
+        const response = await fetch('https://bot.trustednoobs.fyi/addons/deathctr/deathctr.txt?refresh=' + Date.now());
+        if (!response.ok) throw new Error("HTTP " + response.status);
+        const text = await response.text();
+        document.getElementById('counter').textContent = text.trim();
+      } catch (err) {
+        document.getElementById('counter').textContent = 'Error';
+        console.error("Failed to fetch counter:", err);
+      }
+    }
+
+    fetchCounter();
+    setInterval(fetchCounter, 3000); // Update every 3 seconds
+  </script>
+</body>
+</html>

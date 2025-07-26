@@ -21,8 +21,9 @@
   <div id="counter">Loading...</div>
   <script>
     async function fetchCounter() {
+      const url = 'https://corsproxy.io/?https://bot.trustednoobs.fyi/addons/deathctr/deathctr.txt?refresh=' + Date.now();
       try {
-        const response = await fetch('https://bot.trustednoobs.fyi/addons/deathctr/deathctr.txt?refresh=' + Date.now());
+        const response = await fetch(url);
         if (!response.ok) throw new Error("HTTP " + response.status);
         const text = await response.text();
         document.getElementById('counter').textContent = text.trim();

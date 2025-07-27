@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Death Counter</title>
+  <title>LuclinFTW Death Counter + Poll Chart</title>
   <!-- Force full page reload every 5 minutes -->
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
@@ -11,58 +11,68 @@
   <style>
     body {
       margin: 0;
-      background-color: rgba(0,0,0,0);
+      background: rgba(0,0,0,0);
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      height: 100vh;
+      padding: 20px;
+      box-sizing: border-box;
     }
-    .gradient-text {
+    .label {
       font-family: monospace;
-      font-size: 72px;
+      font-size: 60px;
       background: linear-gradient(to right, #9B30FF, #FF69B4);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
       color: transparent;
-      position: relative;
-      padding: 0 10px;
-    }
-    .gradient-text::before {
-      content: attr(data-text);
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      color: transparent;
       text-shadow:
         0 0 8px rgba(255, 105, 180, 0.9),
         0 0 16px rgba(155, 48, 255, 0.8),
         0 0 20px rgba(255, 105, 180, 0.6);
+      margin-bottom: 10px;
+    }
+    .counter {
+      font-family: monospace;
+      font-size: 80px;
+      background: linear-gradient(to right, #FFD700, #FFA500);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: transparent;
+      text-shadow:
+        0 0 8px rgba(255, 165, 0, 0.9),
+        0 0 16px rgba(255, 165, 0, 0.8),
+        0 0 20px rgba(255, 165, 0, 0.6);
+      margin-bottom: 20px;
+    }
+    iframe.poll {
+      width: 480px;
+      height: 360px;
+      border: none;
+      transform: scale(0.75);
+      transform-origin: top center;
     }
   </style>
 </head>
 <body>
-  <div id="text" class="gradient-text" data-text="PrblPrincessTwix has died: –">
-    PrblPrincessTwix has died: –
-  </div>
+  <div id="label" class="label">LuclinFTW Death Counter</div>
+  <div id="counter" class="counter">–</div>
+  <iframe class="poll" src="https://bot.trustednoobs.fyi/obs/poll-chart"></iframe>
 
   <script>
     async function updateCounter() {
-      const el = document.getElementById('text');
+      const el = document.getElementById('counter');
       try {
         const resp = await fetch('https://corsproxy.io/?https://bot.trustednoobs.fyi/addons/deathctr/deathctr.txt?refresh=' + Date.now());
         if (!resp.ok) throw new Error('HTTP ' + resp.status);
         const raw = await resp.text();
         const doc = new DOMParser().parseFromString(raw, 'text/html');
         const count = (doc.body.textContent || '').trim();
-        const display = `PrblPrincessTwix has died: ${count}`;
-        el.setAttribute('data-text', display);
-        el.textContent = display;
+        el.textContent = count;
       } catch (err) {
-        const errorText = 'PrblPrincessTwix has died: Error';
-        el.setAttribute('data-text', errorText);
-        el.textContent = errorText;
+        el.textContent = 'Error';
         console.error('Fetch failed:', err);
       }
     }

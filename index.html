@@ -2,21 +2,21 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Death Counter</title>
-  <!-- Full page reload every 5 minutes -->
+  <title>Death Counter + Polls</title>
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
+  <!-- Page reload every 5 minutes -->
   <meta http-equiv="refresh" content="300">
   <style>
     body {
       margin: 0;
-      background-color: rgba(0,0,0,0);
+      background: rgba(0,0,0,0);
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      height: 100vh;
+      padding: 20px;
+      box-sizing: border-box;
     }
     .label {
       font-family: monospace;
@@ -24,15 +24,12 @@
       background: linear-gradient(to right, #9B30FF, #FF69B4);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      background-clip: text;
       color: transparent;
-      position: relative;
-      padding: 0 10px;
-      margin-bottom: 10px;
       text-shadow:
         0 0 8px rgba(255, 105, 180, 0.9),
         0 0 16px rgba(155, 48, 255, 0.8),
         0 0 20px rgba(255, 105, 180, 0.6);
+      margin-bottom: 10px;
     }
     .counter {
       font-family: monospace;
@@ -40,40 +37,15 @@
       background: linear-gradient(to right, #FFD700, #FFA500);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      background-clip: text;
       color: transparent;
-      position: relative;
-      padding: 0 10px;
       text-shadow:
         0 0 8px rgba(255, 165, 0, 0.9),
         0 0 16px rgba(255, 165, 0, 0.8),
         0 0 20px rgba(255, 165, 0, 0.6);
+      margin-bottom: 20px;
     }
-  </style>
-</head>
-<body>
-  <div id="label" class="label">PrblPrincessTwix has died</div>
-  <div id="counter" class="counter">–</div>
-
-  <script>
-    async function updateCounter() {
-      const labelEl = document.getElementById('label');
-      const counterEl = document.getElementById('counter');
-      try {
-        const resp = await fetch('https://corsproxy.io/?https://bot.trustednoobs.fyi/addons/deathctr/deathctr.txt?refresh=' + Date.now());
-        if (!resp.ok) throw new Error('HTTP ' + resp.status);
-        const raw = await resp.text();
-        const doc = new DOMParser().parseFromString(raw, 'text/html');
-        const count = (doc.body.textContent || '').trim();
-        counterEl.textContent = count;
-      } catch (err) {
-        counterEl.textContent = 'Error';
-        console.error('Fetch failed:', err);
-      }
-    }
-
-    updateCounter();
-    setInterval(updateCounter, 3000);
-  </script>
-</body>
-</html>
+    iframe.poll {
+      width: 480px;
+      height: 360px;
+      border: none;
+      transform: scale(0.

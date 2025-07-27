@@ -9,20 +9,34 @@
   <style>
     body {
       margin: 0;
-      background-color: rgba(0,0,0,0);
-      color: white;
-      font-size: 72px;
-      font-family: monospace;
+      background: rgba(0,0,0,0);
       display: flex;
       align-items: center;
       justify-content: center;
       height: 100vh;
-      text-shadow: 2px 2px 5px black;
+    }
+    .label {
+      font-family: monospace;
+      font-size: 48px;
+      color: white;
+      margin-right: 8px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+    }
+    .count {
+      font-family: monospace;
+      font-size: 72px;
+      background: linear-gradient(to right, yellow, orange);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-fill-color: transparent;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
     }
   </style>
 </head>
 <body>
-  <div id="counter">Loading...</div>
+  <div class="label">Deaths:</div>
+  <div id="counter" class="count">–</div>
   <script>
     async function fetchCounter() {
       const url = 'https://corsproxy.io/?https://bot.trustednoobs.fyi/addons/deathctr/deathctr.txt?refresh=' + Date.now();

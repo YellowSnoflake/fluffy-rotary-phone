@@ -2,81 +2,35 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>LuclinFTW Death Counter + Poll Chart</title>
-  <!-- Force full page reload every 5 minutes -->
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-  <meta http-equiv="Pragma" content="no-cache">
-  <meta http-equiv="Expires" content="0">
-  <meta http-equiv="refresh" content="300">
-  <style>
-    body {
-      margin: 0;
-      background: rgba(0,0,0,0);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      box-sizing: border-box;
-    }
-    .label {
-      font-family: monospace;
-      font-size: 60px;
-      background: linear-gradient(to right, #9B30FF, #FF69B4);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      color: transparent;
-      text-shadow:
-        0 0 8px rgba(255, 105, 180, 0.9),
-        0 0 16px rgba(155, 48, 255, 0.8),
-        0 0 20px rgba(255, 105, 180, 0.6);
-      margin-bottom: 10px;
-    }
-    .counter {
-      font-family: monospace;
-      font-size: 80px;
-      background: linear-gradient(to right, #FFD700, #FFA500);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      color: transparent;
-      text-shadow:
-        0 0 8px rgba(255, 165, 0, 0.9),
-        0 0 16px rgba(255, 165, 0, 0.8),
-        0 0 20px rgba(255, 165, 0, 0.6);
-      margin-bottom: 20px;
-    }
-    iframe.poll {
-      width: 480px;
-      height: 360px;
-      border: none;
-      transform: scale(0.75);
-      transform-origin: top center;
-    }
-  </style>
+  <title>LuclinFTW Death Counter</title>
 </head>
-<body>
-  <div id="label" class="label">LuclinFTW Death Counter</div>
-  <div id="counter" class="counter">–</div>
-  <iframe class="poll" src="https://bot.trustednoobs.fyi/obs/poll-chart"></iframe>
-
+<body style="margin:0;background:rgba(0,0,0,0);display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;">
+  <div style="font-family:monospace;font-size:60px;
+              background:linear-gradient(to right,#9B30FF,#FF69B4);
+              -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+              text-shadow:0 0 8px rgba(255,105,180,0.9),0 0 16px rgba(155,48,255,0.8),0 0 20px rgba(255,105,180,0.6);
+              margin-bottom:10px;">
+    LuclinFTW Death Counter
+  </div>
+  <div id="counter" style="font-family:monospace;font-size:80px;
+                          background:linear-gradient(to right,#FFD700,#FFA500);
+                          -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+                          text-shadow:0 0 8px rgba(255,165,0,0.9),0 0 16px rgba(255,165,0,0.8),0 0 20px rgba(255,165,0,0.6);">
+    –
+  </div>
   <script>
-    async function updateCounter() {
+    async function updateCounter(){
       const el = document.getElementById('counter');
       try {
         const resp = await fetch('https://corsproxy.io/?https://bot.trustednoobs.fyi/addons/deathctr/deathctr.txt?refresh=' + Date.now());
         if (!resp.ok) throw new Error('HTTP ' + resp.status);
         const raw = await resp.text();
         const doc = new DOMParser().parseFromString(raw, 'text/html');
-        const count = (doc.body.textContent || '').trim();
-        el.textContent = count;
-      } catch (err) {
+        el.textContent = (doc.body.textContent || '').trim();
+      } catch {
         el.textContent = 'Error';
-        console.error('Fetch failed:', err);
       }
     }
-
     updateCounter();
     setInterval(updateCounter, 3000);
   </script>
